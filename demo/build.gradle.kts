@@ -18,10 +18,12 @@ android {
     buildTypes {
         // 10.0.2.2 is the Mac as seen from the emulator; pk_local_demo is the key `npm run seed` sets.
         // The demo uses the SDK with no code: the key and the API reach it through the manifest.
+        // Another campaign or API for a local test: -PtestbuddyKey=pk_... -PtestbuddyApi=http://10.0.2.2:<port>
         debug {
-            manifestPlaceholders["testbuddyKey"] = "pk_local_demo"
-            manifestPlaceholders["testbuddyApi"] = "http://10.0.2.2:3005"
-            buildConfigField("String", "API_URL", "\"http://10.0.2.2:3005\"")
+            val api = providers.gradleProperty("testbuddyApi").getOrElse("http://10.0.2.2:3005")
+            manifestPlaceholders["testbuddyKey"] = providers.gradleProperty("testbuddyKey").getOrElse("pk_local_demo")
+            manifestPlaceholders["testbuddyApi"] = api
+            buildConfigField("String", "API_URL", "\"$api\"")
         }
         release {
             manifestPlaceholders["testbuddyKey"] = ""

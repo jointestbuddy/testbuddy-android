@@ -8,23 +8,11 @@ The SDK of [TestBuddy](https://jointestbuddy.com), where Android developers test
 
 ## Install
 
-The SDK starts on its own from a key in your manifest: no code. With Gradle (Kotlin DSL), in `settings.gradle.kts`:
-
-```kotlin
-dependencyResolutionManagement {
-    repositories {
-        google()
-        mavenCentral()
-        maven("https://jitpack.io")
-    }
-}
-```
-
-In your app module's `build.gradle.kts`:
+The SDK is on Maven Central and starts on its own from a key in your manifest: no repository to add, no code. In your app module's `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("com.github.jointestbuddy:testbuddy-android:0.2.0")
+    implementation("com.jointestbuddy:testbuddy-android:0.3.0")
 }
 ```
 
@@ -40,7 +28,7 @@ Keep it in every build you upload to your closed test during your wave. You can 
 
 ## Repository
 
-`sdk/` is the library, `demo/` a small app that stands in for a tested app. Tests: `./gradlew :sdk:testDebugUnitTest`. JitPack builds each tag with `jitpack.yml`.
+`sdk/` is the library, `demo/` a small app that stands in for a tested app. Tests: `./gradlew :sdk:testDebugUnitTest`. Releases go to Maven Central (`com.jointestbuddy`).
 
 This repository is published from TestBuddy's main repository; issues and questions are welcome here or at hello@jointestbuddy.com.
 

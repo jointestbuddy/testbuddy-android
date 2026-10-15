@@ -3,6 +3,7 @@ package com.jointestbuddy
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import com.android.installreferrer.api.InstallReferrerClient
 import com.android.installreferrer.api.InstallReferrerStateListener
@@ -17,8 +18,9 @@ import java.util.concurrent.Executors
  * TestBuddy SDK. It starts by itself from the app's manifest (see [InitProvider]), or call [init] once in
  * `Application.onCreate`: it links this install to the tester's place (Play install
  * referrer, or a link from the TestBuddy web), then reports how long the app stays in the foreground. It sends only
- * what validates a test day: an install token, session start times and durations, objective keys. No personal data.
- * Remove it before the production release.
+ * what validates the setup and a test day: at each start the key, the package name and the store that installed the
+ * app; then an install token, session start times and durations, objective keys. No personal data. Remove it before
+ * the production release.
  */
 object TestBuddy {
     internal const val DEFAULT_API = "https://jointestbuddy.com"
@@ -60,7 +62,10 @@ object TestBuddy {
         app = application
         this.campaignKey = campaignKey
         this.apiUrl = apiUrl.trimEnd('/')
-        background { post("/v1/sdk/hello", JSONObject().put("campaignKey", campaignKey).put("packageName", app.packageName)) }
+        // The installer tells TestBuddy whether this build came from Google Play, where testers install it.
+        background {
+            post("/v1/sdk/hello", JSONObject().put("campaignKey", campaignKey).put("packageName", app.packageName).put("installer", installer()))
+        }
         if (!isLinked && !prefs.getBoolean(REFERRER_READ, false)) readReferrer()
         application.registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
             override fun onActivityStarted(activity: Activity) {
@@ -107,6 +112,14 @@ object TestBuddy {
         if (!isInitialized) return
         enqueue(JSONObject().put("kind", "objective").put("objective", key))
     }
+
+    // The app that installed this build (see [installerName]). On the io thread: it asks the package manager.
+    private fun installer(): String? = installerName(
+        runCatching {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) app.packageManager.getInstallSourceInfo(app.packageName).installingPackageName
+            else @Suppress("DEPRECATION") app.packageManager.getInstallerPackageName(app.packageName)
+        }.getOrNull(),
+    )
 
     private fun readReferrer() {
         val client = InstallReferrerClient.newBuilder(app).build()
