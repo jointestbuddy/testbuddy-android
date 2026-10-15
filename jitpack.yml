@@ -1,0 +1,5 @@
+# JitPack defaults to Java 8; AGP 9 needs 17 or later.
+jdk:
+  - openjdk17
+install:
+  - ./gradlew :sdk:publishToMavenLocal

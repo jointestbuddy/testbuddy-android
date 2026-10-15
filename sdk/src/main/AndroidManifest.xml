@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <application>
+        <!-- The web's "Link it" button opens testbuddy://<package>/link?code=XXXXXX: the place links without typing. -->
+        <activity
+            android:name="com.jointestbuddy.LinkActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="testbuddy" android:host="${applicationId}" android:path="/link" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
