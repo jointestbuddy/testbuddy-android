@@ -8,7 +8,7 @@ The SDK of [TestBuddy](https://jointestbuddy.com), where Android developers test
 
 ## Install
 
-In `settings.gradle.kts`:
+The SDK starts on its own from a key in your manifest: no code. With Gradle (Kotlin DSL), in `settings.gradle.kts`:
 
 ```kotlin
 dependencyResolutionManagement {
@@ -24,22 +24,17 @@ In your app module's `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("com.github.jointestbuddy:testbuddy-android:0.1.0")
+    implementation("com.github.jointestbuddy:testbuddy-android:0.2.0")
 }
 ```
 
-In `Application.onCreate`, with the key shown in TestBuddy's setup (it starts with `pk_`):
+In `AndroidManifest.xml`, inside `<application>`, with the key shown in TestBuddy's setup (it starts with `pk_`):
 
-```kotlin
-import com.jointestbuddy.TestBuddy
-
-class App : Application() {
-    override fun onCreate() {
-        super.onCreate()
-        TestBuddy.init(this, "pk_...")
-    }
-}
+```xml
+<meta-data android:name="com.jointestbuddy.KEY" android:value="pk_..." />
 ```
+
+The steps for Flutter, React Native, Expo (a config plugin), Unity and Capacitor are on [jointestbuddy.com/sdk](https://jointestbuddy.com/sdk/). Prefer code? `TestBuddy.init(this, "pk_...")` in `Application.onCreate` works too.
 
 Keep it in every build you upload to your closed test during your wave. You can remove it before your production release.
 

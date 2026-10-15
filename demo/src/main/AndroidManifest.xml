@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <application
-        android:name=".DemoApp"
-        android:label="TestBuddy demo">
+    <application android:label="TestBuddy demo">
+        <!-- All the SDK needs: its key (and, for this demo, the local API). No Application class, no init call. -->
+        <meta-data android:name="com.jointestbuddy.KEY" android:value="${testbuddyKey}" />
+        <meta-data android:name="com.jointestbuddy.API_URL" android:value="${testbuddyApi}" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

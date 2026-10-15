@@ -14,13 +14,14 @@ import java.util.UUID
 import java.util.concurrent.Executors
 
 /**
- * TestBuddy SDK. Call [init] once in `Application.onCreate`: it links this install to the tester's place (Play install
+ * TestBuddy SDK. It starts by itself from the app's manifest (see [InitProvider]), or call [init] once in
+ * `Application.onCreate`: it links this install to the tester's place (Play install
  * referrer, or a link from the TestBuddy web), then reports how long the app stays in the foreground. It sends only
  * what validates a test day: an install token, session start times and durations, objective keys. No personal data.
  * Remove it before the production release.
  */
 object TestBuddy {
-    private const val DEFAULT_API = "https://jointestbuddy.com"
+    internal const val DEFAULT_API = "https://jointestbuddy.com"
     private const val PREFS = "com.jointestbuddy"
     private const val TOKEN = "installToken"
     private const val QUEUE = "queue"

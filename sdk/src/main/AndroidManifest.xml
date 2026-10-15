@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET" />
     <application>
+        <!-- Starts the SDK before Application.onCreate when the app's manifest has com.jointestbuddy.KEY: no code needed. -->
+        <provider
+            android:name="com.jointestbuddy.InitProvider"
+            android:authorities="${applicationId}.testbuddy-init"
+            android:exported="false" />
         <!-- The web's "Link it" button opens testbuddy://<package>/link?code=XXXXXX: the place links without typing. -->
         <activity
             android:name="com.jointestbuddy.LinkActivity"

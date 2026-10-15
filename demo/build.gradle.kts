@@ -17,13 +17,16 @@ android {
 
     buildTypes {
         // 10.0.2.2 is the Mac as seen from the emulator; pk_local_demo is the key `npm run seed` sets.
+        // The demo uses the SDK with no code: the key and the API reach it through the manifest.
         debug {
+            manifestPlaceholders["testbuddyKey"] = "pk_local_demo"
+            manifestPlaceholders["testbuddyApi"] = "http://10.0.2.2:3005"
             buildConfigField("String", "API_URL", "\"http://10.0.2.2:3005\"")
-            buildConfigField("String", "CAMPAIGN_KEY", "\"pk_local_demo\"")
         }
         release {
+            manifestPlaceholders["testbuddyKey"] = ""
+            manifestPlaceholders["testbuddyApi"] = ""
             buildConfigField("String", "API_URL", "\"https://jointestbuddy.com\"")
-            buildConfigField("String", "CAMPAIGN_KEY", "\"\"")
         }
     }
 
