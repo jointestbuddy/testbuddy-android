@@ -27,7 +27,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = if (project.hasProperty("central")) "com.jointestbuddy" else "com.github.jointestbuddy"
             artifactId = "testbuddy-android"
-            version = "0.3.0"
+            version = "0.3.1"
             afterEvaluate { from(components["release"]) }
             pom {
                 name.set("TestBuddy Android SDK")

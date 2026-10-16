@@ -64,7 +64,8 @@ object TestBuddy {
         this.apiUrl = apiUrl.trimEnd('/')
         // The installer tells TestBuddy whether this build came from Google Play, where testers install it.
         background {
-            post("/v1/sdk/hello", JSONObject().put("campaignKey", campaignKey).put("packageName", app.packageName).put("installer", installer()))
+            // Always named, "unknown" without one: TestBuddy reads an absent installer as an SDK older than 0.3.1.
+            post("/v1/sdk/hello", JSONObject().put("campaignKey", campaignKey).put("packageName", app.packageName).put("installer", installer() ?: "unknown"))
         }
         if (!isLinked && !prefs.getBoolean(REFERRER_READ, false)) readReferrer()
         application.registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {

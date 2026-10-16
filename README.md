@@ -12,7 +12,7 @@ The SDK is on Maven Central and starts on its own from a key in your manifest: n
 
 ```kotlin
 dependencies {
-    implementation("com.jointestbuddy:testbuddy-android:0.3.0")
+    implementation("com.jointestbuddy:testbuddy-android:0.3.1")
 }
 ```
 
